@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Power of Permanence — The Cleveland Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    /* Brand palette (Blue primary, Pink accent, Gray background) */
+    --blue:        #1A8DA9;   /* primary */
+    --blue-deep:   #126F87;   /* darker shade for decorative strokes / hover */
+    --blue-darker: #0E5A6E;   /* deepest blue for emphasis if needed */
+    --pink:        #C0629A;   /* accent */
+    --pink-deep:   #A85183;   /* darker pink for hover */
+    --pink-soft:   #E8C2D2;   /* light tinted pink for subtle accents on blue */
+    --gray:        #F3F2F0;   /* background */
+    --gray-warm:   #FAF8F6;   /* slightly warmer surface for cards on gray */
+    --white:       #FFFFFF;
+    --cream:       #F3F1EF;   /* off-white for text on blue */
+    --ink:         #0E2A33;   /* deep blue-ink for body text */
+
+    /* Legacy variable names retained for backward compatibility throughout the file */
+    --dark-green:  var(--blue);
+    --mid-green:   var(--blue-deep);
+    --orange:      var(--pink);
+    --light-orange: var(--pink-soft);
+    --paper:       var(--gray);
+
+    /* Derived alphas (using blue RGB: 26, 141, 169) */
+    --dark-green-95: rgba(26,141,169,0.95);
+    --dark-green-08: rgba(14,42,51,0.08);
+    --dark-green-12: rgba(14,42,51,0.12);
+    --dark-green-20: rgba(14,42,51,0.20);
+    --orange-15:     rgba(192,98,154,0.15);
+
+    --font-display: 'Source Sans 3', 'Source Sans Pro', system-ui, sans-serif;
+    --font-body:    'Source Sans 3', 'Source Sans Pro', system-ui, sans-serif;
+
+    --radius: 4px;
+    --radius-lg: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.55;
+    font-weight: 400;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Subtle grain overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--blue);
+  }
+
+  /* ============ NAV ============ */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 18px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 100;
+    background: rgba(250, 248, 245, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  nav.top.scrolled { border-bottom-color: var(--dark-green-12); }
+  nav.top .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--dark-green);
+    letter-spacing: -0.01em;
+    font-size: 16px;
+  }
+  nav.top .brand .mark {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--blue);
+    position: relative;
+    display: inline-block;
+  }
+  nav.top .brand .mark::after {
+    content: ""; position: absolute;
+    inset: 7px;
+    border-radius: 50%;
+    border: 2px solid var(--white);
+  }
+  nav.top .links {
+    display: flex; gap: 32px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  nav.top .links a {
+    color: var(--dark-green);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  nav.top .links a:hover { opacity: 1; }
+  @media (max-width: 768px) {
+    nav.top { padding: 14px 20px; }
+    nav.top .links { display: none; }
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 40px 60px;
+    position: relative;
+    background: var(--dark-green);
+    color: var(--white);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 80px;
+  }
+
+  /* Decorative concentric rings — symbolize perpetuity */
+  .hero .rings {
+    position: absolute;
+    right: -180px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 800px;
+    height: 800px;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+  .hero .rings circle {
+    fill: none;
+    stroke: var(--pink-soft);
+    stroke-opacity: 0.30;
+    stroke-width: 1;
+  }
+  .hero .rings circle.accent { stroke: var(--pink-soft); stroke-opacity: 1; stroke-width: 1.5; }
+  .hero .rings circle.dashed { stroke-dasharray: 3 8; }
+
+  @keyframes drift {
+    0%, 100% { transform: translateY(-50%) rotate(0deg); }
+    50% { transform: translateY(-50%) rotate(20deg); }
+  }
+  .hero .rings { animation: drift 40s ease-in-out infinite; transform-origin: center; }
+
+  .hero-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+  .hero .eyebrow {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--pink-soft);
+    margin-bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero .eyebrow::before {
+    content: ""; width: 32px; height: 1px;
+    background: var(--pink-soft);
+  }
+  .hero h1 {
+    color: var(--white);
+    font-size: clamp(56px, 9vw, 132px);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    max-width: 1000px;
+    margin-bottom: 36px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--pink-soft);
+    font-family: var(--font-display);
+  }
+  .hero .lede {
+    max-width: 580px;
+    font-size: clamp(17px, 1.4vw, 21px);
+    line-height: 1.55;
+    color: var(--white);
+    opacity: 0.95;
+    margin-bottom: 48px;
+    font-weight: 400;
+  }
+  .hero .cta-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 28px;
+    min-height: 48px;
+    width: auto;
+    flex: 0 0 auto;
+    border-radius: 50px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.005em;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-primary {
+    background: var(--pink);
+    color: var(--white);
+    font-weight: 700;
+  }
+  .btn-primary:hover { background: var(--pink-deep); transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.35);
+    padding: 14px 27px;  /* compensate for border */
+  }
+  .btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+  .btn .arrow { transition: transform 0.25s; display: inline-block; }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  .hero .stat-strip {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+  .hero .stat-strip .stat {
+    border-left: 1px solid rgba(243,241,239,0.2);
+    padding-left: 20px;
+    min-width: 0;
+  }
+  .hero .stat-strip .num {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--pink-soft);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .hero .stat-strip .lbl {
+    font-size: 12px;
+    color: var(--white);
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 6px;
+  }
+  @media (max-width: 768px) {
+    .hero { padding: 110px 20px 50px; gap: 56px; min-height: auto; }
+    .hero .rings { right: -300px; width: 500px; height: 500px; opacity: 0.4; }
+    .hero .stat-strip { gap: 24px 32px; }
+    .hero .stat-strip .num { font-size: 28px; }
+    .hero .stat-strip .stat { flex: 1 1 140px; }
+  }
+
+  /* ============ SECTION TEMPLATE ============ */
+  section {
+    padding: 100px 40px;
+    position: relative;
+    z-index: 2;
+  }
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .section-eyebrow {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--pink);
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-eyebrow::before {
+    content: ""; width: 28px; height: 1px;
+    background: var(--pink);
+  }
+  .section-title {
+    font-size: clamp(40px, 5.5vw, 72px);
+    margin-bottom: 24px;
+    max-width: 900px;
+  }
+  .section-intro {
+    max-width: 640px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink);
+    opacity: 0.8;
+    margin-bottom: 60px;
+  }
+  @media (max-width: 768px) {
+    section { padding: 70px 20px; }
+  }
+
+  /* ============ STORY (the why) ============ */
+  .story {
+    background: var(--white);
+    border-bottom: 1px solid var(--dark-green-08);
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-top: 40px;
+  }
+  .story-card {
+    background: var(--paper);
+    border-radius: var(--radius-lg);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--dark-green-08);
+  }
+  .story-card.endowed {
+    background: var(--dark-green);
+    color: var(--white);
+    border: none;
+  }
+  .story-card .label {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+    color: var(--dark-green);
+    opacity: 0.6;
+  }
+  .story-card.endowed .label { color: var(--pink-soft); opacity: 1; }
+  .story-card h3 {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+  .story-card.endowed h3 { color: var(--white); }
+  .story-card p {
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+  .story-card.endowed p { opacity: 0.9; }
+
+  .story-card .visual {
+    margin-top: 32px;
+    height: 120px;
+    position: relative;
+  }
+  /* one-time: a single bar that depletes */
+  .story-card.onetime .visual {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .story-card.onetime .bar {
+    flex: 1;
+    background: linear-gradient(180deg, var(--orange), var(--light-orange));
+    border-radius: 3px 3px 0 0;
+  }
+  .story-card.onetime .bar:first-child { height: 100%; }
+  .story-card.onetime .bar:not(:first-child) {
+    height: 0;
+    background: var(--light-orange);
+    opacity: 0.4;
+  }
+  /* endowed: growing perpetual bars */
+  .story-card.endowed .visual {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .story-card.endowed .bar {
+    flex: 1;
+    background: var(--orange);
+    border-radius: 3px 3px 0 0;
+    transition: height 0.5s ease;
+  }
+
+  @media (max-width: 768px) {
+    .story-grid { grid-template-columns: 1fr; gap: 24px; }
+    .story-card { padding: 32px 24px; }
+    .story-card h3 { font-size: 28px; }
+  }
+
+  /* ============ CALCULATOR ============ */
+  .calc {
+    background: var(--paper);
+    padding-top: 100px;
+    padding-bottom: 120px;
+  }
+  .calc-shell {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 48px;
+    margin-top: 40px;
+    align-items: start;
+  }
+
+  /* Inputs panel - sticky */
+  .inputs-panel {
+    position: sticky;
+    top: 100px;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    border: 1px solid var(--dark-green-08);
+    box-shadow: 0 4px 24px var(--dark-green-08);
+  }
+  .inputs-panel h3 {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .inputs-panel .sub {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-bottom: 24px;
+  }
+
+  /* Mode toggle (One-time vs Monthly) */
+  .mode-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    background: var(--dark-green-08);
+    padding: 4px;
+    border-radius: 50px;
+    margin-bottom: 28px;
+  }
+  .mode-toggle button {
+    padding: 10px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 50px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--dark-green);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.6;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .mode-toggle button:hover { opacity: 0.9; }
+  .mode-toggle button.active {
+    background: var(--dark-green);
+    color: var(--white);
+    opacity: 1;
+    box-shadow: 0 2px 8px var(--dark-green-20);
+  }
+
+  /* Helper line showing total contributed in monthly mode */
+  .contribution-helper {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--dark-green);
+    opacity: 0.7;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 12px;
+    background: var(--dark-green-08);
+    border-radius: var(--radius);
+  }
+  .contribution-helper strong {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--dark-green);
+    opacity: 1;
+  }
+  /* Show/hide gift fields by mode */
+  .mode-onetime .gift-monthly { display: none; }
+  .mode-monthly .gift-onetime { display: none; }
+  /* Suffix for monthly input (/month) */
+  .currency-input.with-suffix input { padding-right: 70px; }
+  .currency-input .suffix {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dark-green);
+    opacity: 0.55;
+    font-size: 13px;
+    font-weight: 500;
+    pointer-events: none;
+  }
+
+  .input-group {
+    margin-bottom: 22px;
+  }
+  .input-group:last-child { margin-bottom: 0; }
+  .input-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--dark-green);
+  }
+  .input-label .value {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--orange);
+  }
+
+  /* Gift amount field */
+  .currency-input {
+    position: relative;
+  }
+  .currency-input::before {
+    content: "$";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dark-green);
+    font-weight: 600;
+    font-family: var(--font-display);
+    pointer-events: none;
+  }
+  .currency-input input {
+    width: 100%;
+    padding: 12px 14px 12px 30px;
+    border: 1.5px solid var(--dark-green-12);
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--dark-green);
+    background: var(--paper);
+    transition: border-color 0.2s;
+    -moz-appearance: textfield;
+  }
+  .currency-input input:focus {
+    outline: none;
+    border-color: var(--orange);
+  }
+  .currency-input input::-webkit-outer-spin-button,
+  .currency-input input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  /* Gift presets */
+  .presets {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .preset {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 6px;
+    background: transparent;
+    border: 1px solid var(--dark-green-12);
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--dark-green);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .preset:hover { border-color: var(--orange); color: var(--orange); }
+  .preset.active {
+    background: var(--dark-green);
+    color: var(--white);
+    border-color: var(--dark-green);
+  }
+
+  /* Sliders */
+  input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: var(--dark-green-12);
+    border-radius: 2px;
+    outline: none;
+    margin: 8px 0 0;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--orange);
+    cursor: pointer;
+    border: 3px solid var(--white);
+    box-shadow: 0 1px 4px var(--dark-green-20);
+    transition: transform 0.15s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--orange);
+    cursor: pointer;
+    border: 3px solid var(--white);
+    box-shadow: 0 1px 4px var(--dark-green-20);
+  }
+  .input-bounds {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--dark-green);
+    opacity: 0.5;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* Results area */
+  .results-area { display: flex; flex-direction: column; gap: 40px; }
+
+  /* Comparison hero card */
+  .compare {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--dark-green-08);
+  }
+  .compare-head {
+    padding: 36px 40px 28px;
+    border-bottom: 1px solid var(--dark-green-08);
+  }
+  .compare-head h3 {
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+  .compare-head .desc {
+    font-size: 14px;
+    opacity: 0.7;
+  }
+  .compare-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .compare-side {
+    padding: 36px 40px;
+    position: relative;
+  }
+  .compare-side.endowed {
+    background: var(--dark-green);
+    color: var(--white);
+  }
+  .compare-side .side-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 24px;
+    opacity: 0.5;
+  }
+  .compare-side.endowed .side-label { color: var(--pink-soft); opacity: 1; }
+
+  .big-num {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 4vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--dark-green);
+    margin-bottom: 6px;
+  }
+  .compare-side.endowed .big-num { color: var(--white); }
+  .big-num-caption {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-bottom: 28px;
+  }
+
+  .mini-stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding-top: 24px;
+    border-top: 1px solid var(--dark-green-08);
+  }
+  .compare-side.endowed .mini-stat-row { border-top-color: rgba(255,255,255,0.15); }
+  .mini-stat .ms-num {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--dark-green);
+    line-height: 1;
+  }
+  .compare-side.endowed .mini-stat .ms-num { color: var(--pink-soft); }
+  .mini-stat .ms-lbl {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 6px;
+    opacity: 0.65;
+  }
+
+  /* Forever badge */
+  .forever-badge {
+    position: absolute;
+    top: 36px;
+    right: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--pink);
+    color: var(--white);
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .forever-badge::before {
+    content: "";
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--white);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.7); }
+  }
+
+  /* Multiplier highlight */
+  .multiplier-banner {
+    background: var(--pink);
+    color: var(--white);
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .multiplier-banner .text {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+  .multiplier-banner .text strong { font-weight: 800; }
+  .multiplier-banner .mult-num {
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  /* ============ CHART CARD ============ */
+  .chart-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 36px 40px;
+    border: 1px solid var(--dark-green-08);
+  }
+  .chart-card h3 {
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+  .chart-card .chart-desc {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-bottom: 24px;
+  }
+  .chart-toggles {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .toggle {
+    padding: 8px 14px;
+    border-radius: 50px;
+    border: 1px solid var(--dark-green-12);
+    background: transparent;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--dark-green);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .toggle:hover { border-color: var(--orange); }
+  .toggle.active {
+    background: var(--dark-green);
+    color: var(--white);
+    border-color: var(--dark-green);
+  }
+  .chart-wrap {
+    position: relative;
+    height: 360px;
+  }
+  .chart-legend {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+  }
+
+  /* ============ IMPACT GRID ============ */
+  .impact-section {
+    background: var(--dark-green);
+    color: var(--white);
+  }
+  .impact-section h2 { color: var(--white); }
+  .impact-section .section-intro { color: var(--white); opacity: 0.8; }
+  .impact-section .section-eyebrow { color: var(--pink-soft); }
+
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+  }
+  @media (max-width: 900px) {
+    .impact-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .impact-grid { grid-template-columns: 1fr; }
+  }
+
+  .impact-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .impact-card:hover {
+    background: rgba(255,255,255,0.07);
+    transform: translateY(-2px);
+  }
+  .impact-card .icon {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 20px;
+    color: var(--pink-soft);
+  }
+  .impact-card .icon svg { width: 100%; height: 100%; }
+  .impact-card .cat {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 6px;
+    color: var(--white);
+  }
+  .impact-card .cost {
+    font-size: 12px;
+    opacity: 0.6;
+    margin-bottom: 24px;
+  }
+  .impact-card .impact-stat {
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .impact-card .impact-stat:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .impact-card .impact-stat .n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--white);
+  }
+  .impact-card .impact-stat.headline .n {
+    color: var(--pink-soft);
+    font-size: 36px;
+  }
+  .impact-card .impact-stat .l {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.65;
+    margin-top: 6px;
+  }
+  .impact-card .impact-stat.headline .l {
+    opacity: 0.95;
+    color: var(--pink-soft);
+  }
+
+  /* ============ ASSUMPTIONS DRAWER ============ */
+  .assumptions-section {
+    background: var(--white);
+  }
+  .assumptions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+  @media (max-width: 900px) { .assumptions-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .assumptions-grid { grid-template-columns: 1fr; } }
+  .assumption {
+    padding: 24px;
+    background: var(--paper);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--dark-green-08);
+  }
+  .assumption-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .assumption-value {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--dark-green);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .assumption-desc { font-size: 12px; opacity: 0.7; }
+  .assumption input[type="range"] { margin-top: 16px; }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--dark-green);
+    color: var(--white);
+    padding: 80px 40px 40px;
+    position: relative;
+    z-index: 2;
+  }
+  footer .container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 60px;
+  }
+  footer h3 {
+    color: var(--white);
+    font-size: 42px;
+    margin-bottom: 20px;
+    max-width: 600px;
+  }
+  footer p { opacity: 0.8; max-width: 480px; margin-bottom: 32px; }
+  footer .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  footer .meta {
+    grid-column: 1 / -1;
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 12px;
+    opacity: 0.6;
+  }
+  @media (max-width: 768px) {
+    footer .container { grid-template-columns: 1fr; }
+    footer h3 { font-size: 32px; }
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1024px) {
+    .calc-shell { grid-template-columns: 1fr; }
+    .inputs-panel { position: static; }
+  }
+  @media (max-width: 600px) {
+    .compare-body { grid-template-columns: 1fr; }
+    .multiplier-banner { flex-direction: column; align-items: flex-start; padding: 20px 24px; }
+    .multiplier-banner .mult-num { font-size: 48px; }
+    .compare-head, .compare-side, .chart-card { padding-left: 24px; padding-right: 24px; }
+    .compare-side { padding: 28px 24px; }
+    .forever-badge { top: 24px; right: 24px; }
+    /* Buttons: stack full-width on phones so labels never crowd */
+    .hero .cta-row, footer .cta-row { gap: 12px; width: 100%; }
+    .hero .cta-row .btn, footer .cta-row .btn { width: 100%; flex: 1 1 100%; }
+  }
+
+  /* fade-in animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+  /* number tick animation */
+  .ticker { display: inline-block; transition: opacity 0.2s; }
+
+</style>
+</head>
+<body>
+
+<nav class="top" id="topnav">
+  <div class="brand">
+    <span class="mark"></span>
+    <span>The Cleveland Foundation</span>
+  </div>
+  <div class="links">
+    <a href="#story">Why endowments</a>
+    <a href="#calculator">Calculator</a>
+    <a href="#impact">Impact</a>
+    <a href="#give">Give</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <svg class="rings" viewBox="0 0 800 800" aria-hidden="true">
+    <circle cx="400" cy="400" r="80" class="accent" />
+    <circle cx="400" cy="400" r="140" />
+    <circle cx="400" cy="400" r="200" class="dashed" />
+    <circle cx="400" cy="400" r="260" />
+    <circle cx="400" cy="400" r="320" class="dashed" />
+    <circle cx="400" cy="400" r="380" />
+  </svg>
+  <div class="hero-inner">
+    <div class="eyebrow">The power of permanence</div>
+    <h1>Your gift, <em>working forever.</em></h1>
+    <p class="lede">A one-time gift does enormous good — once. A gift to a permanent fund at the Cleveland Foundation is invested, granted, and reinvested every year, in perpetuity. See what your contribution could do.</p>
+    <div class="cta-row">
+      <a href="#calculator" class="btn btn-primary">Model your impact <span class="arrow">→</span></a>
+      <a href="#story" class="btn btn-ghost">How it works</a>
+    </div>
+  </div>
+  <div class="stat-strip">
+    <div class="stat">
+      <div class="num">$3.7B+</div>
+      <div class="lbl">Assets under management</div>
+    </div>
+    <div class="stat">
+      <div class="num">112</div>
+      <div class="lbl">Years serving Greater Cleveland</div>
+    </div>
+    <div class="stat">
+      <div class="num">∞</div>
+      <div class="lbl">Years a permanent fund lasts</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STORY ============ -->
+<section class="story" id="story">
+  <div class="container">
+    <div class="section-eyebrow">Two ways to give</div>
+    <h2 class="section-title">A single gift, two very different futures.</h2>
+    <p class="section-intro">Imagine giving $10,000 to a cause you love. Where that gift lives determines how long it works for that cause.</p>
+
+    <div class="story-grid">
+      <div class="story-card onetime">
+        <div class="label">One-time gift</div>
+        <h3>Spent once.</h3>
+        <p>A non-endowed gift is granted out in the year it's received. It does real good — feeds families, funds programs, supports neighbors today. But once it's spent, the work it does ends.</p>
+        <div class="visual">
+          <div class="bar" style="height: 100%"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </div>
+
+      <div class="story-card endowed">
+        <div class="label">Endowed / Permanent fund</div>
+        <h3>Working forever.</h3>
+        <p>A permanent fund is invested in perpetuity. Each year, a portion is granted to the community; the rest stays invested and grows. The fund never gets spent — it makes grants every year, forever, while the principal continues to grow.</p>
+        <div class="visual" id="endowedBars">
+          <div class="bar" style="height: 40%"></div>
+          <div class="bar" style="height: 45%"></div>
+          <div class="bar" style="height: 52%"></div>
+          <div class="bar" style="height: 60%"></div>
+          <div class="bar" style="height: 68%"></div>
+          <div class="bar" style="height: 76%"></div>
+          <div class="bar" style="height: 86%"></div>
+          <div class="bar" style="height: 100%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CALCULATOR ============ -->
+<section class="calc" id="calculator">
+  <div class="container">
+    <div class="section-eyebrow">Interactive model</div>
+    <h2 class="section-title">See what your gift could become.</h2>
+    <p class="section-intro">Adjust your gift amount and assumptions. Watch the impact change in real time.</p>
+
+    <div class="calc-shell">
+      <!-- INPUTS -->
+      <aside class="inputs-panel mode-onetime" id="inputsPanel">
+        <h3>Your gift</h3>
+        <div class="sub">Build your scenario</div>
+
+        <div class="mode-toggle" role="tablist" aria-label="Gift type">
+          <button type="button" class="active" data-mode="onetime" role="tab" aria-selected="true">One-time</button>
+          <button type="button" data-mode="monthly" role="tab" aria-selected="false">Monthly</button>
+        </div>
+
+        <!-- One-time gift input -->
+        <div class="input-group gift-onetime">
+          <div class="input-label">
+            <span>One-time contribution</span>
+            <span class="value">$<span id="giftDisplay">10,000</span></span>
+          </div>
+          <div class="currency-input">
+            <input type="number" id="gift" value="10000" min="0" step="500" aria-label="One-time contribution amount" />
+          </div>
+          <div class="presets" id="onetimePresets">
+            <button class="preset" data-gift="1000">$1K</button>
+            <button class="preset active" data-gift="10000">$10K</button>
+            <button class="preset" data-gift="25000">$25K</button>
+            <button class="preset" data-gift="100000">$100K</button>
+            <button class="preset" data-gift="1000000">$1M</button>
+          </div>
+        </div>
+
+        <!-- Monthly gift input -->
+        <div class="input-group gift-monthly">
+          <div class="input-label">
+            <span>Monthly contribution</span>
+            <span class="value">$<span id="monthlyDisplay">100</span><span style="opacity:0.5;font-weight:500;">/mo</span></span>
+          </div>
+          <div class="currency-input with-suffix">
+            <input type="number" id="monthly" value="100" min="0" step="10" aria-label="Monthly contribution amount" />
+            <span class="suffix">/ month</span>
+          </div>
+          <div class="presets" id="monthlyPresets">
+            <button class="preset" data-monthly="25">$25</button>
+            <button class="preset" data-monthly="50">$50</button>
+            <button class="preset active" data-monthly="100">$100</button>
+            <button class="preset" data-monthly="250">$250</button>
+            <button class="preset" data-monthly="500">$500</button>
+          </div>
+          <div class="contribution-helper">
+            <span>Total contributed over <span id="helperYears">25</span> years</span>
+            <strong>$<span id="totalContributed">30,000</span></strong>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-label">
+            <span>Time horizon</span>
+            <span class="value"><span id="yearsDisplay">25</span> years</span>
+          </div>
+          <input type="range" id="years" min="5" max="100" value="25" step="1" />
+          <div class="input-bounds"><span>5 yrs</span><span>100 yrs</span></div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-label">
+            <span>Expected annual return</span>
+            <span class="value"><span id="returnDisplay">7.0</span>%</span>
+          </div>
+          <input type="range" id="return" min="3" max="12" value="7" step="0.5" />
+          <div class="input-bounds"><span>Conservative</span><span>Aggressive</span></div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-label">
+            <span>Annual payout rate</span>
+            <span class="value"><span id="spendDisplay">5.0</span>%</span>
+          </div>
+          <input type="range" id="spend" min="3" max="7" value="5" step="0.25" />
+          <div class="input-bounds"><span>3% (more growth)</span><span>7% (more grants)</span></div>
+        </div>
+      </aside>
+
+      <!-- RESULTS -->
+      <div class="results-area">
+
+        <div class="compare">
+          <div class="compare-head">
+            <h3>Side-by-side comparison</h3>
+            <div class="desc">Where the same gift goes, over <span id="horizonText">25</span> years</div>
+          </div>
+          <div class="compare-body">
+            <div class="compare-side">
+              <div class="side-label" id="oneTimeSideLabel">One-time gift</div>
+              <div class="big-num">$<span id="oneTimeImpact">10,000</span></div>
+              <div class="big-num-caption" id="oneTimeCaption">Total impact — spent in year one</div>
+              <div class="mini-stat-row">
+                <div class="mini-stat">
+                  <div class="ms-num" id="oneTimeYearsNum">1</div>
+                  <div class="ms-lbl">Years of grants</div>
+                </div>
+                <div class="mini-stat">
+                  <div class="ms-num">$0</div>
+                  <div class="ms-lbl">Remaining principal</div>
+                </div>
+              </div>
+            </div>
+            <div class="compare-side endowed">
+              <div class="forever-badge">Forever</div>
+              <div class="side-label" id="endowedSideLabel">Endowed gift</div>
+              <div class="big-num">$<span id="endowedImpact">26,160</span></div>
+              <div class="big-num-caption">Total impact within your horizon, and still growing</div>
+              <div class="mini-stat-row">
+                <div class="mini-stat">
+                  <div class="ms-num">$<span id="cumGrants">13,717</span></div>
+                  <div class="ms-lbl">Cumulative grants</div>
+                </div>
+                <div class="mini-stat">
+                  <div class="ms-num">$<span id="endingBalance">12,443</span></div>
+                  <div class="ms-lbl">Fund balance, still working</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="multiplier-banner">
+            <div class="text" id="multiplierCopy">An endowed gift creates <strong><span id="multiplierText">2.6</span>× the impact</strong> of giving it once — and keeps creating impact every year, forever.</div>
+            <div class="mult-num"><span id="multiplierBig">2.6</span>×</div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>The endowment over time</h3>
+          <div class="chart-desc">How the fund grows and gives, year after year</div>
+          <div class="chart-toggles">
+            <button class="toggle active" data-view="both">Balance & Grants</button>
+            <button class="toggle" data-view="balance">Fund balance</button>
+            <button class="toggle" data-view="grants">Annual grants</button>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="growthChart"></canvas>
+          </div>
+          <div class="chart-legend" id="chartLegend">
+            <div class="legend-item"><span class="legend-swatch" style="background: var(--dark-green)"></span>Fund balance (still invested)</div>
+            <div class="legend-item"><span class="legend-swatch" style="background: var(--orange)"></span>Cumulative grants paid out</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IMPACT ============ -->
+<section class="impact-section" id="impact">
+  <div class="container">
+    <div class="section-eyebrow">Real-world impact</div>
+    <h2 class="section-title">What that means, in lives changed.</h2>
+    <p class="section-intro">Dollars are abstract. Here's what your endowed gift could do for the community, each year — forever.</p>
+
+    <div class="impact-grid" id="impactGrid">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer id="give">
+  <div class="container">
+    <div>
+      <h3>Ready to make your gift work forever?</h3>
+      <p>Our gift planning team can help you create a permanent fund in your name, in honor of someone you love, or to support the causes you care about most.</p>
+      <div class="cta-row">
+        <a href="#" class="btn btn-primary">Talk to a gift planner <span class="arrow">→</span></a>
+        <a href="#" class="btn btn-ghost">Download this report</a>
+      </div>
+    </div>
+    <div></div>
+    <div class="meta">
+      <div>© The Cleveland Foundation · Illustrative model — actual results vary.</div>
+      <div>Built with care for the next 100 years.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// CORE MODEL — same math as the Excel workbook
+// ============================================================
+const FEE = 0.01;        // 1% admin fee
+const INFLATION = 0.025; // 2.5% inflation
+const MONTHS_PER_YEAR = 12;
+
+function project({ gift, monthly, years, returnRate, spendRate }) {
+  const data = [];
+  let balance = 0;
+  let cumGrants = 0;
+  let cumGrantsReal = 0;
+  const monthlyAnnualTotal = (monthly || 0) * MONTHS_PER_YEAR;
+
+  for (let year = 1; year <= Math.max(years, 100); year++) {
+    // One-time gift lands in year 1; monthly contributions continue through the horizon
+    const oneTime = year === 1 ? (gift || 0) : 0;
+    const monthlyThisYear = year <= years ? monthlyAnnualTotal : 0;
+    const contribution = oneTime + monthlyThisYear;
+    const begin = balance;
+    const invReturn = (begin + contribution * 0.5) * (returnRate - FEE);
+    const grant = (begin + contribution) * spendRate;
+    const end = begin + contribution + invReturn - grant;
+
+    cumGrants += grant;
+    cumGrantsReal += grant / Math.pow(1 + INFLATION, year);
+
+    data.push({
+      year,
+      contribution,
+      begin,
+      invReturn,
+      grant,
+      end,
+      cumGrants,
+      cumGrantsReal
+    });
+
+    balance = end;
+  }
+  return data;
+}
+
+// ============================================================
+// FORMATTERS
+// ============================================================
+const fmt = (n) => Math.round(n).toLocaleString();
+const fmtMult = (n) => n.toFixed(1);
+
+// ============================================================
+// DOM
+// ============================================================
+const inputsPanel    = document.getElementById('inputsPanel');
+const giftInput      = document.getElementById('gift');
+const monthlyInput   = document.getElementById('monthly');
+const yearsInput     = document.getElementById('years');
+const returnInput    = document.getElementById('return');
+const spendInput     = document.getElementById('spend');
+
+const giftDisplay      = document.getElementById('giftDisplay');
+const monthlyDisplay   = document.getElementById('monthlyDisplay');
+const yearsDisplay     = document.getElementById('yearsDisplay');
+const returnDisplay    = document.getElementById('returnDisplay');
+const spendDisplay     = document.getElementById('spendDisplay');
+const helperYears      = document.getElementById('helperYears');
+const totalContributed = document.getElementById('totalContributed');
+const horizonText      = document.getElementById('horizonText');
+const oneTimeImpact    = document.getElementById('oneTimeImpact');
+const oneTimeSideLabel = document.getElementById('oneTimeSideLabel');
+const oneTimeCaption   = document.getElementById('oneTimeCaption');
+const oneTimeYearsNum  = document.getElementById('oneTimeYearsNum');
+const endowedSideLabel = document.getElementById('endowedSideLabel');
+const endowedImpact    = document.getElementById('endowedImpact');
+const cumGrantsEl      = document.getElementById('cumGrants');
+const endingBalance    = document.getElementById('endingBalance');
+const multiplierText   = document.getElementById('multiplierText');
+const multiplierBig    = document.getElementById('multiplierBig');
+const multiplierCopy   = document.getElementById('multiplierCopy');
+
+// Track current giving mode
+let mode = 'onetime'; // or 'monthly'
+
+// ============================================================
+// CHART
+// ============================================================
+const ctx = document.getElementById('growthChart').getContext('2d');
+let currentView = 'both';
+
+const chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [
+      {
+        label: 'Fund balance',
+        data: [],
+        borderColor: '#1A8DA9',
+        backgroundColor: 'rgba(26,141,169,0.10)',
+        borderWidth: 2.5,
+        tension: 0.35,
+        fill: true,
+        pointRadius: 0,
+        pointHoverRadius: 6,
+        pointHoverBackgroundColor: '#1A8DA9',
+        pointHoverBorderColor: '#FFFFFF',
+        pointHoverBorderWidth: 2
+      },
+      {
+        label: 'Cumulative grants',
+        data: [],
+        borderColor: '#C0629A',
+        backgroundColor: 'rgba(192,98,154,0.10)',
+        borderWidth: 2.5,
+        tension: 0.35,
+        fill: true,
+        pointRadius: 0,
+        pointHoverRadius: 6,
+        pointHoverBackgroundColor: '#C0629A',
+        pointHoverBorderColor: '#FFFFFF',
+        pointHoverBorderWidth: 2
+      },
+      {
+        label: 'Annual grant',
+        data: [],
+        borderColor: '#126F87',
+        backgroundColor: 'rgba(18,111,135,0.10)',
+        borderWidth: 2.5,
+        tension: 0.35,
+        fill: true,
+        pointRadius: 0,
+        pointHoverRadius: 6,
+        hidden: true
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#0E2A33',
+        titleFont: { family: 'Source Sans 3', weight: '700', size: 13 },
+        bodyFont: { family: 'Source Sans 3', size: 13 },
+        padding: 12,
+        cornerRadius: 6,
+        displayColors: true,
+        boxPadding: 4,
+        callbacks: {
+          title: (items) => 'Year ' + items[0].label,
+          label: (item) => item.dataset.label + ': $' + fmt(item.parsed.y)
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: '#0E2A33', font: { family: 'Source Sans 3', size: 12 }, maxTicksLimit: 8 },
+        border: { color: 'rgba(14,42,51,0.15)' }
+      },
+      y: {
+        grid: { color: 'rgba(14,42,51,0.06)' },
+        ticks: {
+          color: '#0E2A33',
+          font: { family: 'Source Sans 3', size: 12 },
+          callback: (v) => '$' + (v >= 1000 ? (v/1000).toFixed(0) + 'K' : v)
+        },
+        border: { display: false }
+      }
+    }
+  }
+});
+
+// ============================================================
+// IMPACT CATEGORIES
+// ============================================================
+const impactCategories = [
+  {
+    name: 'Weeks of after-school tutoring',
+    cost: 250,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l10-4 10 4-10 4-10-4zM6 9v5c0 2 3 3 6 3s6-1 6-3V9M22 7v6"/></svg>'
+  },
+  {
+    name: 'School supply backpacks',
+    cost: 35,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8a4 4 0 014-4h6a4 4 0 014 4v12a1 1 0 01-1 1H6a1 1 0 01-1-1V8zM9 4v3M15 4v3M8 12h8M8 16h8"/></svg>'
+  },
+  {
+    name: 'Nights of safe shelter',
+    cost: 75,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l9-9 9 9M5 10v10h14V10M10 20v-6h4v6"/></svg>'
+  },
+  {
+    name: 'Job-training scholarships',
+    cost: 1500,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M9 14l-3 8 6-4 6 4-3-8"/></svg>'
+  },
+  {
+    name: 'Years of early-childhood education',
+    cost: 12000,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>'
+  },
+  {
+    name: 'Meals for families',
+    cost: 5,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11h18M5 11v9a1 1 0 001 1h12a1 1 0 001-1v-9M9 11V7a3 3 0 016 0v4"/></svg>'
+  }
+];
+
+// ============================================================
+// UPDATE
+// ============================================================
+function update() {
+  const gift     = mode === 'onetime' ? (+giftInput.value || 0) : 0;
+  const monthly  = mode === 'monthly' ? (+monthlyInput.value || 0) : 0;
+  const years    = +yearsInput.value;
+  const retRate  = +returnInput.value / 100;
+  const spdRate  = +spendInput.value / 100;
+
+  // Total contributed over the horizon (used for one-time-equivalent comparison)
+  const totalContrib = gift + monthly * 12 * years;
+
+  // Update labels
+  giftDisplay.textContent    = (+giftInput.value || 0).toLocaleString();
+  monthlyDisplay.textContent = (+monthlyInput.value || 0).toLocaleString();
+  yearsDisplay.textContent   = years;
+  returnDisplay.textContent  = (+returnInput.value).toFixed(1);
+  spendDisplay.textContent   = (+spendInput.value).toFixed(1);
+  horizonText.textContent    = years;
+  helperYears.textContent    = years;
+  totalContributed.textContent = totalContrib.toLocaleString();
+
+  // Update preset highlight (in current mode)
+  if (mode === 'onetime') {
+    document.querySelectorAll('#onetimePresets .preset').forEach(p => {
+      p.classList.toggle('active', +p.dataset.gift === gift);
+    });
+  } else {
+    document.querySelectorAll('#monthlyPresets .preset').forEach(p => {
+      p.classList.toggle('active', +p.dataset.monthly === monthly);
+    });
+  }
+
+  // Run model
+  const projection = project({ gift, monthly, years, returnRate: retRate, spendRate: spdRate });
+  const atHorizon  = projection[years - 1];
+
+  // Update comparison labels based on mode
+  if (mode === 'onetime') {
+    oneTimeSideLabel.textContent = 'One-time gift';
+    oneTimeCaption.textContent   = 'Total impact — spent in year one';
+    oneTimeYearsNum.textContent  = '1';
+    endowedSideLabel.textContent = 'Endowed gift';
+    multiplierCopy.innerHTML     = `An endowed gift creates <strong><span id="multiplierText">0</span>× the impact</strong> of giving it once — and keeps creating impact every year, forever.`;
+  } else {
+    oneTimeSideLabel.textContent = 'Granted as received';
+    oneTimeCaption.textContent   = 'Total impact — each gift spent in the year it arrives';
+    oneTimeYearsNum.textContent  = years;
+    endowedSideLabel.textContent = 'Endowed monthly gift';
+    multiplierCopy.innerHTML     = `Routing your monthly gifts to an endowed fund creates <strong><span id="multiplierText">0</span>× the impact</strong> — and keeps giving every year, forever.`;
+  }
+
+  // Update comparison values
+  oneTimeImpact.textContent  = fmt(totalContrib);
+  endowedImpact.textContent  = fmt(atHorizon.cumGrants + atHorizon.end);
+  cumGrantsEl.textContent    = fmt(atHorizon.cumGrants);
+  endingBalance.textContent  = fmt(atHorizon.end);
+
+  const mult = totalContrib > 0 ? (atHorizon.cumGrants + atHorizon.end) / totalContrib : 0;
+  // Re-grab multiplierText because innerHTML rewrite recreates it
+  document.getElementById('multiplierText').textContent = fmtMult(mult);
+  multiplierBig.textContent = fmtMult(mult);
+
+  // Update chart (show up to selected horizon)
+  const chartData = projection.slice(0, years);
+  chart.data.labels = chartData.map(d => d.year);
+  chart.data.datasets[0].data = chartData.map(d => d.end);
+  chart.data.datasets[1].data = chartData.map(d => d.cumGrants);
+  chart.data.datasets[2].data = chartData.map(d => d.grant);
+  chart.update('none');
+
+  // Update impact cards — use total contributed as the "one-time equivalent" baseline
+  renderImpactCards(totalContrib, atHorizon, years);
+}
+
+function renderImpactCards(baselineDollars, horizonRow, years) {
+  const grid = document.getElementById('impactGrid');
+  const perpetualAnnualGrant = horizonRow.grant;
+  const baselineLabel = mode === 'onetime' ? 'From a one-time gift' : 'If granted as received';
+
+  grid.innerHTML = impactCategories.map(cat => {
+    const baseline    = Math.floor(baselineDollars / cat.cost);
+    const overHorizon = Math.floor(horizonRow.cumGrants / cat.cost);
+    const perYear     = Math.floor(perpetualAnnualGrant / cat.cost);
+
+    return `
+      <div class="impact-card">
+        <div class="icon">${cat.icon}</div>
+        <div class="cat">${cat.name}</div>
+        <div class="cost">$${cat.cost.toLocaleString()} per unit</div>
+        <div class="impact-stat">
+          <div class="n">${baseline.toLocaleString()}</div>
+          <div class="l">${baselineLabel}</div>
+        </div>
+        <div class="impact-stat">
+          <div class="n">${overHorizon.toLocaleString()}</div>
+          <div class="l">From endowed gift, over ${years} years</div>
+        </div>
+        <div class="impact-stat headline">
+          <div class="n">${perYear.toLocaleString()}</div>
+          <div class="l">Every year, forever</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ============================================================
+// EVENT BINDING
+// ============================================================
+[giftInput, monthlyInput, yearsInput, returnInput, spendInput].forEach(el => {
+  el.addEventListener('input', update);
+});
+
+// One-time presets
+document.querySelectorAll('#onetimePresets .preset').forEach(p => {
+  p.addEventListener('click', () => {
+    giftInput.value = p.dataset.gift;
+    update();
+  });
+});
+
+// Monthly presets
+document.querySelectorAll('#monthlyPresets .preset').forEach(p => {
+  p.addEventListener('click', () => {
+    monthlyInput.value = p.dataset.monthly;
+    update();
+  });
+});
+
+// Mode toggle (One-time / Monthly)
+document.querySelectorAll('.mode-toggle button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    mode = btn.dataset.mode;
+    document.querySelectorAll('.mode-toggle button').forEach(b => {
+      const isActive = b.dataset.mode === mode;
+      b.classList.toggle('active', isActive);
+      b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+    inputsPanel.classList.toggle('mode-onetime', mode === 'onetime');
+    inputsPanel.classList.toggle('mode-monthly', mode === 'monthly');
+    update();
+  });
+});
+
+document.querySelectorAll('.toggle').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.toggle').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    const view = t.dataset.view;
+    currentView = view;
+    // Toggle dataset visibility
+    if (view === 'both') {
+      chart.setDatasetVisibility(0, true);
+      chart.setDatasetVisibility(1, true);
+      chart.setDatasetVisibility(2, false);
+      document.getElementById('chartLegend').innerHTML = `
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--dark-green)"></span>Fund balance (still invested)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--orange)"></span>Cumulative grants paid out</div>
+      `;
+    } else if (view === 'balance') {
+      chart.setDatasetVisibility(0, true);
+      chart.setDatasetVisibility(1, false);
+      chart.setDatasetVisibility(2, false);
+      document.getElementById('chartLegend').innerHTML = `
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--dark-green)"></span>Fund balance — the principal stays at work in perpetuity</div>
+      `;
+    } else if (view === 'grants') {
+      chart.setDatasetVisibility(0, false);
+      chart.setDatasetVisibility(1, false);
+      chart.setDatasetVisibility(2, true);
+      document.getElementById('chartLegend').innerHTML = `
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--mid-green)"></span>Annual grant — the gift the fund makes each year, and it grows over time</div>
+      `;
+    }
+    chart.update();
+  });
+});
+
+// nav scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('topnav').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// init
+update();
+</script>
+
+</body>
+</html>
